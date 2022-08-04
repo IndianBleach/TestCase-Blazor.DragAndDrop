@@ -1,0 +1,67 @@
+@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
+
+.dd_anim {
+    transition: all 0.3s ease-in-out;
+}
+
+.dd_card {
+    text-align: center;
+    padding: 5px 7px;
+    width: 200px;
+    height: 320px;
+    max-width: 270px;
+    background: white;
+}
+
+    .dd_card h4 {
+        font-weight: 700;
+    }
+
+    .dd_card p {
+        margin-bottom: 5px;
+        font-size: 18px;
+        color: gray;
+    }
+
+    .dd_card label {
+        font-size: 12px;
+        color: gray;
+    }
+
+.dd_anim:active {
+    animation: scaleOnDragging .6s ease;
+}
+
+.dd_over {
+    transition: all 0.3s ease-in-out;
+    animation: scaleOnDraggingLeave .6s ease;
+}
+
+@keyframes scaleOnDraggingLeave {
+    from {
+        background-color: white;
+        transform: scale(1);
+    }
+
+    50% {
+        background-color: rgb(233, 233, 233);
+        transform: scale(1.05);
+    }
+
+    to {
+        background-color: white;
+        transform: scale(1);
+    }
+}
+
+@keyframes scaleOnDragging {
+    from {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    to {
+        transform: scale(1);
+    }
+}

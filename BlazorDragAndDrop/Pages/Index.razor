@@ -1,0 +1,104 @@
+﻿@page "/"
+
+<PageTitle>Drag and Drop Items</PageTitle>
+
+<h1>Drag and Drop</h1>
+
+<div class="col-12 d-flex justify-content-center">
+    <div class="col-10 col-lg-6 d-flex justify-content-center">
+        @foreach (var item in cards)
+        {
+            <div @ondragover="(e) => OnDragOver(e, item)"                
+                @ondragend="(e) => OnDragEnd(e)"
+                @ondragstart="(e) => OnDragStart(e, item)"
+                draggable="true"
+                class="dd_anim p-2">
+                <div class="@item.DragOverClass mb-2 dd_card border rounded">
+                  <h4>@item.Name</h4>
+                  <p>@item.OrderPos</p>
+                  <label>Order</label>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+@code {
+    private Card _curCard = null;
+    private Card _overCard = null;
+
+    private void CleanOverClass()
+    {
+        cards.ForEach(x =>
+        {
+            if (x.DragOverClass != null)
+                x.RemoveDragOverClass();
+        });
+    }
+
+    private void OnDragEnd(EventArgs e)
+    {
+        CleanOverClass();
+
+        int prev = _curCard.OrderPos;
+        int next = _overCard.OrderPos;
+
+        cards.ForEach(x =>
+        {
+            if (x.Id == _curCard.Id)
+                x.OrderPos = next;
+
+            if (x.Id == _overCard.Id)
+                x.OrderPos = prev;
+        }); 
+
+        cards = cards.OrderBy(x => x.OrderPos).ToList();
+        StateHasChanged();
+    }
+
+    private void OnDragStart(EventArgs e, Card card)
+        => _curCard = card;
+
+    private void OnDragOver(EventArgs e, Card card)
+    {
+        CleanOverClass();
+
+        if (_curCard != null && card.Id != _curCard.Id)
+        {
+            card.AddDragOverClass();
+
+            _overCard = card;
+        }
+    }
+
+    private class Card
+    {
+        public int Id { get; set; }
+        public int OrderPos { get; set; }
+        public string Name { get; set; }
+        public string? DragOverClass { get; private set; }
+
+        public Card(int id, int orderPos, string name)
+        {
+            Id = id;
+            Name = name;
+            OrderPos = orderPos;
+            DragOverClass = null;
+        }
+
+        public void AddDragOverClass()
+            => DragOverClass = "dd_over";
+
+        public void RemoveDragOverClass()
+            => DragOverClass = null;
+    }
+
+    private List<Card> cards = new List<Card>
+    {
+        new Card(4, 1, "First Card"),
+        new Card(3, 2, "Second Card"),
+        new Card(2, 3, "Theerd Card"),
+        new Card(1, 4, "Four Card"),
+    };
+}
