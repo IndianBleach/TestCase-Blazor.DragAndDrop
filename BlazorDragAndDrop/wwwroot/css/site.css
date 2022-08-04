@@ -1,10 +1,13 @@
 @import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
 .dd_anim {
+    cursor: grab;
     transition: all 0.3s ease-in-out;
 }
 
+
 .dd_card {
+    cursor: grab;
     text-align: center;
     padding: 5px 7px;
     width: 200px;
@@ -29,10 +32,12 @@
     }
 
 .dd_anim:active {
+    cursor: grabbing;
     animation: scaleOnDragging .6s ease;
 }
 
 .dd_over {
+    cursor: grab;
     transition: all 0.3s ease-in-out;
     animation: scaleOnDraggingLeave .6s ease;
 }
@@ -58,9 +63,11 @@
     from {
         transform: scale(1);
     }
+
     50% {
         transform: scale(1.05);
     }
+
     to {
         transform: scale(1);
     }

@@ -5,7 +5,7 @@
 <h1>Drag and Drop</h1>
 
 <div class="col-12 d-flex justify-content-center">
-    <div class="col-10 col-lg-6 d-flex justify-content-center">
+    <div class="col-10 col-lg-6 d-flex justify-content-center flex-wrap">
         @foreach (var item in cards)
         {
             <div @ondragover="(e) => OnDragOver(e, item)"                
